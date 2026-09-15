@@ -80,6 +80,7 @@ Deviations from the table above, plus what each board's Device Tree describes in
 | Radxa ROCK 5B / 5B+ | The Type-C controller is disabled in the mainline Device Tree on purpose: the board is powered over USB-C, and a power-delivery contract negotiated as late as kernel probe makes the supply issue a hard reset. The firmware establishes the contract before the OS starts, which is what that needs.¹ If a board reboots during firmware startup, unset `RK_FUSB302_ENABLE` in its platform `.dsc`. |
 | Radxa ROCK 5 ITX | The connector labelled HDMI0 is really DP1 behind an on-board DP-to-HDMI bridge, wired to VP2; HDMI1 is the one on VP1. Board wiring, not something the firmware can route around. |
 | FriendlyELEC NanoPC-T6<br>NanoPi R6C / R6S<br>CM3588-NAS | The factory MAC address EEPROM on i2c6 is not described by the mainline Device Tree, so Linux generates a random MAC each boot. |
+| FriendlyELEC CM3588-NAS | Only 2 of the 4 M.2 NVMe slots are recognized — confirmed on the UEFI Shell `pci` listing, so this is firmware-level rather than a Linux driver issue. Root cause not identified; see [upstream#259](https://github.com/edk2-porting/edk2-rk3588/issues/259). |
 | FriendlyELEC NanoPi R6C / R6S | eMMC raised from HS200 to HS400 with enhanced strobe, matching FriendlyELEC's own tree for the nanopi6 family and the NanoPC-T6 upstream.¹ |
 | Fydetab Duo | No HDMI output — the display controller is not enabled here.<br>SD card is limited to high-speed modes; DDR50/SDR50/SDR104 are disabled because UHS-I is unreliable on this board. |
 | Mekotronics R58X | eMMC HS400 is disabled; the eMMC is unusable with it enabled. |
@@ -259,6 +260,13 @@ A debug build logs in detail to the serial console — see the [release notes](h
 4. Power on.
 
 If nothing appears, swap RX/TX and check the adapter. If you need help reading the logs, open an issue.
+
+# Known issues
+Found while triaging upstream's issue tracker. Not yet fixed here.
+
+* **GMAC gets a new random MAC address every boot, in Device Tree mode.** No mainline Device Tree we carry sets `mac-address` on either GMAC node, so Linux generates one on each boot. A fix exists on the [`test/pr261-gmac-mac-fixup`](https://github.com/C-Prime90/edk2-rk3588/tree/test/pr261-gmac-mac-fixup) branch, not yet merged. Confirmed independently by [upstream#230](https://github.com/edk2-porting/edk2-rk3588/issues/230) and [#263](https://github.com/edk2-porting/edk2-rk3588/issues/263).
+* **USB-C DisplayPort PHY bring-up can hang boot indefinitely.** `UsbDpPhyDxe`'s poll-with-timeout helper never actually checks its timeout, so a PLL or CDR lock that does not complete — a marginal cable, an unlucky orientation-switch timing — spins forever instead of giving up. Present on every board with a USB-C DisplayPort port; not yet fixed. See [upstream#249](https://github.com/edk2-porting/edk2-rk3588/issues/249).
+* **NVMe not detected at boot on some distributions.** `phy_rockchip_naneng_combphy` drives the PCIe combo PHYs and needs to be loaded before the root filesystem mounts. Distros that do not autoload it early (NixOS, at least) need it added explicitly, e.g. `boot.initrd.availableKernelModules = [ "nvme" "phy_rockchip_naneng_combphy" ];`. See [upstream#217](https://github.com/edk2-porting/edk2-rk3588/issues/217).
 
 # Reporting issues
 <https://github.com/C-Prime90/edk2-rk3588/issues> — check for an existing report first, and include expected vs actual behavior, steps to reproduce and [serial logs](#advanced-troubleshooting).
