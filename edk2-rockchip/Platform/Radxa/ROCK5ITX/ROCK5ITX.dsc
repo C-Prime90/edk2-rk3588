@@ -81,6 +81,13 @@
   gRockchipTokenSpaceGuid.PcdFusb302Addresses|{ 0x22 }
   gRockchipTokenSpaceGuid.PcdFusb302Buses|{ 0x8 }
   gRockchipTokenSpaceGuid.PcdFusb302PhyIds|{ 0x0 }
+  # The port can supply an attached device through the GPIO1_B6 VBUS
+  # switch (vbus5v0_typec in the vendor DT). The driver only throws it once
+  # the partner is known to be a sink and nothing else is driving VBUS.
+  gRockchipTokenSpaceGuid.PcdFusb302SourceEnable|TRUE
+  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioBank|1
+  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioPin|14
+  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioActiveHigh|TRUE
 
   #
   # PCIe/SATA/USB Combo PIPE PHY support flags and default values
