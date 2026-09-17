@@ -89,7 +89,10 @@
   gRK3588TokenSpaceGuid.PcdComboPhy0Switchable|TRUE
   gRK3588TokenSpaceGuid.PcdComboPhy1Switchable|TRUE
   gRK3588TokenSpaceGuid.PcdComboPhy2Switchable|TRUE
-  gRK3588TokenSpaceGuid.PcdComboPhy0ModeDefault|$(COMBO_PHY_MODE_PCIE)
+  # Combo PHY 0 is the M.2 2242 slot, wired for both SATA and PCIe. Firefly
+  # ship it as SATA by default and the vendor DT agrees (sata@fe210000 okay,
+  # pcie@fe190000 disabled), so match that. It stays switchable for NVMe.
+  gRK3588TokenSpaceGuid.PcdComboPhy0ModeDefault|$(COMBO_PHY_MODE_SATA)
   gRK3588TokenSpaceGuid.PcdComboPhy1ModeDefault|$(COMBO_PHY_MODE_PCIE)
   gRK3588TokenSpaceGuid.PcdComboPhy2ModeDefault|$(COMBO_PHY_MODE_USB3)
 
