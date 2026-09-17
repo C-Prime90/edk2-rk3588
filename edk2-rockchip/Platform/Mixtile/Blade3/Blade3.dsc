@@ -33,6 +33,9 @@
   # No status LED on this platform.
   DEFINE RK_STATUS_LED_ENABLE = FALSE
 
+  # Two FUSB302 USB Type-C port controllers, on i2c6 and i2c1.
+  DEFINE RK_FUSB302_ENABLE = TRUE
+
   #
   # RK3588-based platform
   #
@@ -62,12 +65,19 @@
   gRockchipTokenSpaceGuid.PcdDeviceTreeName|"rk3588-blade3-v101-linux"
 
   # I2C
-  gRockchipTokenSpaceGuid.PcdI2cSlaveAddresses|{ 0x42, 0x43 }
-  gRockchipTokenSpaceGuid.PcdI2cSlaveBuses|{ 0x0, 0x0 }
-  gRockchipTokenSpaceGuid.PcdI2cSlaveBusesRuntimeSupport|{ FALSE, FALSE }
+  gRockchipTokenSpaceGuid.PcdI2cSlaveAddresses|{ 0x42, 0x43, 0x22, 0x22 }
+  gRockchipTokenSpaceGuid.PcdI2cSlaveBuses|{ 0x0, 0x0, 0x6, 0x1 }
+  gRockchipTokenSpaceGuid.PcdI2cSlaveBusesRuntimeSupport|{ FALSE, FALSE, FALSE, FALSE }
   gRockchipTokenSpaceGuid.PcdRk860xRegulatorAddresses|{ 0x42, 0x43 }
   gRockchipTokenSpaceGuid.PcdRk860xRegulatorBuses|{ 0x0, 0x0 }
   gRockchipTokenSpaceGuid.PcdRk860xRegulatorTags|{ $(SCMI_CLK_CPUB01), $(SCMI_CLK_CPUB23) }
+  # Type-C 0 rides usbdp_phy0, Type-C 1 rides usbdp_phy1.
+  gRockchipTokenSpaceGuid.PcdFusb302Addresses|{ 0x22, 0x22 }
+  gRockchipTokenSpaceGuid.PcdFusb302Buses|{ 0x6, 0x1 }
+  gRockchipTokenSpaceGuid.PcdFusb302PhyIds|{ 0x0, 0x1 }
+  # Sourcing stays off here. Each port has its own VBUS switch (GPIO4_B0 for
+  # port 0, GPIO4_A3 for port 1), but PcdFusb302VbusGpio* names a single pin
+  # for the whole driver, so either port would throw the other's rail.
 
   #
   # PCIe/SATA/USB Combo PIPE PHY support flags and default values
