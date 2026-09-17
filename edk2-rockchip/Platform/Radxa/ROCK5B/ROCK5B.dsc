@@ -80,13 +80,13 @@
   gRockchipTokenSpaceGuid.PcdFusb302Addresses|{ 0x22 }
   gRockchipTokenSpaceGuid.PcdFusb302Buses|{ 0x4 }
   gRockchipTokenSpaceGuid.PcdFusb302PhyIds|{ 0x0 }
-  # This port can supply an attached device. The driver only switches the
-  # rail on once it has established that the partner is a sink and that
-  # nothing else is already driving VBUS.
-  gRockchipTokenSpaceGuid.PcdFusb302SourceEnable|TRUE
-  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioBank|2
-  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioPin|14
-  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioActiveHigh|TRUE
+  # No sourcing on this board: the Type-C port is power input only. TYPEC5V_PWREN_H
+  # does reach GPIO2_B6, but the P-FET it would switch (Q9511) and its whole gate
+  # drive chain are marked NC on the v1.45 schematic, so the pin drives nothing.
+  # The ROCK 5B+ populates that path and keeps its VBUS switch. Note mainline
+  # Linux describes vbus5v0_typec on GPIO2_B6 for 5B/5B+/5T alike, which is the
+  # same copy-paste -- see the Jan 2026 linux-rockchip "Correct Type-C pin bias
+  # settings" thread. Sinking, PD and DP alt mode are unaffected.
 
   #
   # PCIe/SATA/USB Combo PIPE PHY support flags and default values
