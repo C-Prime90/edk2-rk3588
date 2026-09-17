@@ -33,6 +33,9 @@
   #
   DEFINE RK_RTC8563_ENABLE = TRUE
 
+  # FUSB302 USB Type-C port controller on i2c6.
+  DEFINE RK_FUSB302_ENABLE = TRUE
+
   #
   # RK3588-based platform
   #
@@ -63,14 +66,24 @@
   gRockchipTokenSpaceGuid.PcdDeviceTreeName|"rk3588-blueberry-edge-v12-linux"
 
   # I2C
-  gRockchipTokenSpaceGuid.PcdI2cSlaveAddresses|{ 0x42, 0x43, 0x51, 0x10 }
-  gRockchipTokenSpaceGuid.PcdI2cSlaveBuses|{ 0x0, 0x0, 0x6, 0x3 }
-  gRockchipTokenSpaceGuid.PcdI2cSlaveBusesRuntimeSupport|{ FALSE, FALSE, TRUE, FALSE }
+  gRockchipTokenSpaceGuid.PcdI2cSlaveAddresses|{ 0x42, 0x43, 0x51, 0x10, 0x22 }
+  gRockchipTokenSpaceGuid.PcdI2cSlaveBuses|{ 0x0, 0x0, 0x6, 0x3, 0x6 }
+  gRockchipTokenSpaceGuid.PcdI2cSlaveBusesRuntimeSupport|{ FALSE, FALSE, TRUE, FALSE, TRUE }
   gRockchipTokenSpaceGuid.PcdRk860xRegulatorAddresses|{ 0x42, 0x43 }
   gRockchipTokenSpaceGuid.PcdRk860xRegulatorBuses|{ 0x0, 0x0 }
   gRockchipTokenSpaceGuid.PcdRk860xRegulatorTags|{ $(SCMI_CLK_CPUB01), $(SCMI_CLK_CPUB23) }
   gPcf8563RealTimeClockLibTokenSpaceGuid.PcdI2cSlaveAddress|0x51
   gRockchipTokenSpaceGuid.PcdRtc8563Bus|0x6
+  gRockchipTokenSpaceGuid.PcdFusb302Addresses|{ 0x22 }
+  gRockchipTokenSpaceGuid.PcdFusb302Buses|{ 0x6 }
+  gRockchipTokenSpaceGuid.PcdFusb302PhyIds|{ 0x0 }
+  # Same Type-C wiring as the R58 Mini: the port can supply an attached device
+  # through the GPIO4_A7 VBUS switch. The driver only throws it once it has
+  # established that the partner is a sink and nothing else is driving VBUS.
+  gRockchipTokenSpaceGuid.PcdFusb302SourceEnable|TRUE
+  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioBank|4
+  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioPin|7
+  gRockchipTokenSpaceGuid.PcdFusb302VbusGpioActiveHigh|TRUE
 
   # Disable HS400 for now, otherwise eMMC is unusable.
   gRockchipTokenSpaceGuid.PcdDwcSdhciDisableHs400|TRUE
