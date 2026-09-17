@@ -29,6 +29,11 @@
   DEFINE RK_PCA9555_ENABLE = TRUE
 
   #
+  # FUSB302 USB Type-C port controller on i2c6.
+  #
+  DEFINE RK_FUSB302_ENABLE = TRUE
+
+  #
   # RK3588-based platform
   #
 !include Silicon/Rockchip/RK3588/RK3588Platform.dsc.inc
@@ -71,6 +76,12 @@
   gRockchipTokenSpaceGuid.PcdRtc8563Bus|0x6
   gRockchipTokenSpaceGuid.PcdPca9555Address|0x21
   gRockchipTokenSpaceGuid.PcdPca9555Bus|0x6
+  gRockchipTokenSpaceGuid.PcdFusb302Addresses|{ 0x22 }
+  gRockchipTokenSpaceGuid.PcdFusb302Buses|{ 0x6 }
+  gRockchipTokenSpaceGuid.PcdFusb302PhyIds|{ 0x0 }
+  # Sourcing stays off here. This board's Type-C VBUS switch hangs off the
+  # PCA9555 expander rather than an SoC pin, and PcdFusb302VbusGpio* can only
+  # name an SoC bank and pin.
 
   #
   # PCIe/SATA/USB Combo PIPE PHY support flags and default values
