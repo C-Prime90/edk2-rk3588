@@ -1,0 +1,21 @@
+#/** @file
+#
+#  Copyright (c) 2024, Mario Bălănică <mariobalanica02@gmail.com>
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+#**/
+
+[Defines]
+  INF_VERSION                    = 0x0001001A
+  BASE_NAME                      = DeviceTree-Mainline
+  FILE_GUID                      = f6cfd67a-7ddc-4b83-b801-da2dad75a770
+  MODULE_TYPE                    = USER_DEFINED
+  VERSION_STRING                 = 1.0
+
+[Sources]
+  devicetree/mainline/rk3588-blueberry-edge.dts
+
+[Packages]
+  MdePkg/MdePkg.dec
+  Silicon/Rockchip/RockchipPkg.dec
