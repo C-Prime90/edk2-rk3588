@@ -108,6 +108,12 @@
   gRK3588TokenSpaceGuid.PcdUsbDpPhy0Supported|TRUE
   gRK3588TokenSpaceGuid.PcdUsbDpPhy1Supported|TRUE
   gRK3588TokenSpaceGuid.PcdDp0LaneMux|{ 0x2, 0x3 }
+  # DisplayPort AUX SBU switches (GPIO0_C4 / GPIO0_C5),
+  # thrown per plug orientation.
+  # The 5B+ routes these differently from the ROCK 5B: mainline overrides the
+  # shared rock-5b dtsi for exactly this, and this board's vendor blob carries
+  # the 5B's pins rather than its own.
+  gRK3588TokenSpaceGuid.PcdUsbDpPhy0SbuGpios|{ 0, 20, 0, 21 }
   gRK3588TokenSpaceGuid.PcdDp1LaneMux|{ 0x0 }
 
   #

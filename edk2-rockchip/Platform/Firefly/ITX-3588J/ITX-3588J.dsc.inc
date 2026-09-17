@@ -92,6 +92,9 @@
   #
   gRK3588TokenSpaceGuid.PcdUsbDpPhy0Supported|TRUE
   gRK3588TokenSpaceGuid.PcdUsbDpPhy1Supported|TRUE
+  # DisplayPort AUX SBU switches (GPIO4_A6 / GPIO4_A7),
+  # thrown per plug orientation.
+  gRK3588TokenSpaceGuid.PcdUsbDpPhy0SbuGpios|{ 4, 6, 4, 7 }
   gRK3588TokenSpaceGuid.PcdDp1LaneMux|{ 0x2, 0x3 }
 
   #
