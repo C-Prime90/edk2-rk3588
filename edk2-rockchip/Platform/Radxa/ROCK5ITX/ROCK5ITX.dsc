@@ -110,7 +110,7 @@
   # DisplayPort AUX SBU switches (GPIO4_B7 / GPIO4_C0),
   # thrown per plug orientation.
   gRK3588TokenSpaceGuid.PcdUsbDpPhy0SbuGpios|{ 4, 15, 4, 16 }
-  gRK3588TokenSpaceGuid.PcdDp1LaneMux|{ 0x0 }
+  gRK3588TokenSpaceGuid.PcdDp1LaneMux|{ 0x2, 0x3 }
 
   #
   # I2S
@@ -127,7 +127,8 @@
   #
   gRK3588TokenSpaceGuid.PcdDisplayConnectors|{CODE({
     VOP_OUTPUT_IF_HDMI1,
-    VOP_OUTPUT_IF_DP0
+    VOP_OUTPUT_IF_DP0,
+    VOP_OUTPUT_IF_DP1
   })}
 
 ################################################################################
