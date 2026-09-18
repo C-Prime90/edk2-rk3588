@@ -345,8 +345,8 @@ PlatformInitLeds (
   )
 {
   /* Status indicator */
-  GpioPinWrite (1, GPIO_PIN_PC1, FALSE);
-  GpioPinSetDirection (1, GPIO_PIN_PC1, GPIO_PIN_OUTPUT);
+  GpioPinWrite (1, GPIO_PIN_PA4, FALSE);
+  GpioPinSetDirection (1, GPIO_PIN_PA4, GPIO_PIN_OUTPUT);
 }
 
 VOID
@@ -355,7 +355,7 @@ PlatformSetStatusLed (
   IN BOOLEAN  Enable
   )
 {
-  GpioPinWrite (1, GPIO_PIN_PC1, Enable);
+  GpioPinWrite (1, GPIO_PIN_PA4, Enable);
 }
 
 CONST EFI_GUID *

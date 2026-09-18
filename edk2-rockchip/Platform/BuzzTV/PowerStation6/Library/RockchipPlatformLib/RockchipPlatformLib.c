@@ -361,8 +361,8 @@ PlatformInitLeds (
   VOID
   )
 {
-  /* Status indicator */
-  GpioPinWrite (3, GPIO_PIN_PD0, TRUE);
+  /* Status indicator. Green is wired active low, red active high. */
+  GpioPinWrite (3, GPIO_PIN_PD0, FALSE);
   GpioPinSetDirection (3, GPIO_PIN_PD0, GPIO_PIN_OUTPUT);
 
   GpioPinWrite (3, GPIO_PIN_PD1, TRUE);
@@ -376,7 +376,7 @@ PlatformSetStatusLed (
   )
 {
   GpioPinWrite (3, GPIO_PIN_PD0, !Enable);
-  GpioPinWrite (3, GPIO_PIN_PD1, !Enable);
+  GpioPinWrite (3, GPIO_PIN_PD1, Enable);
 }
 
 CONST EFI_GUID *
