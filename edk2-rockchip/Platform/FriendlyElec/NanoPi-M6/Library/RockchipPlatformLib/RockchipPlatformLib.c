@@ -13,6 +13,7 @@
 #include <Library/GpioLib.h>
 #include <Library/RK806.h>
 #include <Library/Rk3588Pcie.h>
+#include <Library/PWMLib.h>
 #include <Soc.h>
 #include <VarStoreData.h>
 
@@ -322,12 +323,23 @@ HdmiTxIomux (
   }
 }
 
+PWM_DATA  pwm_data = {
+  .ControllerID = PWM_CONTROLLER1,
+  .ChannelID    = PWM_CHANNEL1,
+  .PeriodNs     = 4000000,
+  .DutyNs       = 4000000,
+  .Polarity     = FALSE,
+}; // PWM5
+
 VOID
 EFIAPI
 PwmFanIoSetup (
   VOID
   )
 {
+  GpioPinSetFunction (0, GPIO_PIN_PC6, 0xB); // PWM5_M1
+  RkPwmSetConfig (&pwm_data);
+  RkPwmEnable (&pwm_data);
 }
 
 VOID
@@ -336,6 +348,8 @@ PwmFanSetSpeed (
   IN UINT32  Percentage
   )
 {
+  pwm_data.DutyNs = pwm_data.PeriodNs * Percentage / 100;
+  RkPwmSetConfig (&pwm_data);
 }
 
 VOID

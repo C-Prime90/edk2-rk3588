@@ -116,6 +116,11 @@
   gRK3588TokenSpaceGuid.PcdI2S0Supported|TRUE
 
   #
+  # On-board PWM fan
+  #
+  gRK3588TokenSpaceGuid.PcdHasOnBoardFanOutput|TRUE
+
+  #
   # Display support flags and default values
   #
   gRK3588TokenSpaceGuid.PcdDisplayConnectors|{CODE({
